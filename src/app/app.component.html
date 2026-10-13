@@ -1,0 +1,27 @@
+@if (ready()) {
+  <div class="console">
+    <app-console-header />
+    <app-alert-banner />
+    <main class="console__main">
+      <section class="console__traces" [attr.aria-label]="'seismogram.title' | translate">
+        <app-seismogram-panel />
+      </section>
+      <aside class="console__side">
+        <app-event-panel />
+        <app-station-grid />
+        <app-performance-panel />
+      </aside>
+    </main>
+    <section class="console__lower">
+      <app-thread-panel />
+      <app-ingest-panel />
+      <app-simulator-panel />
+      <app-detector-settings />
+      <app-benchmark-panel />
+      <app-trigger-log />
+    </section>
+    <footer class="console__footer">{{ 'app.footer' | translate }}</footer>
+  </div>
+} @else {
+  <app-isolation-error />
+}

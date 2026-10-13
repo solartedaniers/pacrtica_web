@@ -1,0 +1,34 @@
+<section class="panel">
+  <header class="panel__header">
+    <h2 class="panel__title">{{ 'ingest.title' | translate }}</h2>
+  </header>
+  <p class="panel__lead">{{ 'ingest.window' | translate: policy }}</p>
+  @if (view(); as v) {
+    <div class="metric-row">
+      <div class="metric">
+        <span class="metric__label">{{ 'ingest.rate' | translate }}</span>
+        <span class="metric__value">{{ v.rate }}</span>
+        <span class="metric__caption">{{ 'ingest.rateDetail' | translate: { samples: v.samplesPerSecond, kbps: v.kbps } }}</span>
+      </div>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{{ 'ingest.metric' | translate }}</th>
+          <th scope="col">{{ 'ingest.detected' | translate }}</th>
+          <th scope="col">{{ 'ingest.injected' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of v.rows; track row.key) {
+          <tr>
+            <th scope="row">{{ row.key | translate }}</th>
+            <td>{{ row.detected }}</td>
+            <td>{{ row.injected ?? ('common.noValue' | translate) }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <p class="panel__hint">{{ 'ingest.note' | translate }}</p>
+  }
+</section>

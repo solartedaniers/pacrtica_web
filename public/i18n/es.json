@@ -1,0 +1,276 @@
+{
+  "app": {
+    "documentTitle": "Consola de vigilancia sismo-volcánica",
+    "locale": "es-CO",
+    "title": "Consola de vigilancia sismo-volcánica",
+    "subtitle": "Detección temprana STA/LTA · 9 estaciones · 27 canales a 200 Hz · 5.400 muestras por segundo",
+    "footer": "Observatorio vulcanológico regional · Consola de turno · Todo el cálculo de señal corre fuera del hilo principal"
+  },
+  "common": {
+    "noValue": "—",
+    "ms": "{{value}} ms",
+    "seconds": "{{value}} s",
+    "counts": "{{value}} cuentas",
+    "yes": "Sí",
+    "no": "No"
+  },
+  "header": {
+    "wallClock": "Reloj de pared",
+    "dataClock": "Reloj de datos procesados",
+    "lag": "Rezago del procesamiento",
+    "isolated": "Aislamiento de origen activo",
+    "notIsolated": "Sin aislamiento de origen",
+    "threads": "Workers de detección: {{workers}} · núcleos lógicos: {{cores}}",
+    "memory": "Historial compartido: {{megabytes}} MB"
+  },
+  "alert": {
+    "calm": "Sin eventos confirmados",
+    "calmDetail": "Estaciones en disparo en este momento: {{triggered}}. Un evento se confirma con 4 estaciones dentro de 6 s.",
+    "activeTitle": "EVENTO #{{id}} CONFIRMADO · EN CURSO",
+    "recentTitle": "Último evento confirmado: #{{id}}",
+    "confirmedAt": "Cuarta estación a las {{time}}",
+    "stations": "{{count}} estaciones ({{list}})",
+    "peak": "Amplitud pico {{value}} cuentas",
+    "view": "Ver en el sismograma"
+  },
+  "seismogram": {
+    "title": "Sismogramas en vivo",
+    "rowLabel": "{{code}} {{component}}",
+    "live": "En vivo",
+    "paused": "Navegando historial",
+    "goLive": "Volver a vivo",
+    "pause": "Pausar",
+    "window": "Ventana visible",
+    "seconds": "{{value}} s",
+    "zoomIn": "Acercar",
+    "zoomOut": "Alejar",
+    "zoomInShort": "Acercar",
+    "zoomOutShort": "Alejar",
+    "select": "Modo selección",
+    "selection": "Selección: {{from}} → {{to}} ({{seconds}} s)",
+    "clearSelection": "Limpiar selección",
+    "exportSelection": "Exportar selección (CSV)",
+    "hint": "Arrastre para desplazarse en el tiempo · rueda para zoom · Mayús + arrastre (o modo selección) para seleccionar · doble clic vuelve a vivo · flechas, + y − desde el teclado",
+    "eventLabel": "Evento #{{id}}",
+    "canvasLabel": "Sismogramas de 27 canales: 9 estaciones con componentes norte-sur, este-oeste y vertical"
+  },
+  "events": {
+    "title": "Eventos confirmados",
+    "rule": "≥ 4 estaciones en 6 s",
+    "empty": "Aún no hay eventos confirmados. Puede inyectar un sismo desde el generador de señal.",
+    "id": "Evento #{{id}}",
+    "inProgress": "En curso",
+    "closed": "Cerrado",
+    "open": "Abierto",
+    "firstTrigger": "Primer disparo",
+    "confirmedAt": "Cuarta estación",
+    "duration": "Duración",
+    "peak": "Amplitud pico",
+    "stations": "Estaciones participantes",
+    "view": "Ver",
+    "export": "Exportar ±90 s (CSV)",
+    "exportWaiting": "Esperando datos posteriores al evento: faltan {{seconds}} s",
+    "exportBuilding": "Generando el archivo en segundo plano…",
+    "exportReady": "Descargado: {{rows}} filas · listo {{ms}} ms después de solicitarlo",
+    "reasons": {
+      "no-data": "No hay datos en esa ventana.",
+      "expired": "La ventana ya salió del historial de 10 minutos.",
+      "null": "No fue posible generar el archivo."
+    }
+  },
+  "stations": {
+    "title": "Estaciones acelerográficas",
+    "meta": "Relación STA/LTA por canal",
+    "ltaFrozen": "LTA congelada mientras el canal está en disparo",
+    "ltaFrozenShort": "LTA fija",
+    "zone": {
+      "flank": "Flanco",
+      "urban": "Urbana"
+    },
+    "CRN": {
+      "code": "CRN",
+      "name": "Cráter Norte"
+    },
+    "CRS": {
+      "code": "CRS",
+      "name": "Cráter Sur"
+    },
+    "FLE": {
+      "code": "FLE",
+      "name": "Flanco Este"
+    },
+    "FLO": {
+      "code": "FLO",
+      "name": "Flanco Oeste"
+    },
+    "MRD": {
+      "code": "MRD",
+      "name": "Mirador del Cono"
+    },
+    "UCE": {
+      "code": "UCE",
+      "name": "Centro Urbano"
+    },
+    "UNO": {
+      "code": "UNO",
+      "name": "Barrio Norte"
+    },
+    "USU": {
+      "code": "USU",
+      "name": "Barrio Sur"
+    },
+    "UHO": {
+      "code": "UHO",
+      "name": "Hospital Regional"
+    }
+  },
+  "channels": {
+    "NS": "NS",
+    "EO": "EO",
+    "Z": "Z"
+  },
+  "performance": {
+    "title": "Hilo principal e interacción",
+    "reset": "Reiniciar",
+    "inp": "INP",
+    "budget": "Meta ≤ 200 ms",
+    "interactions": "{{count}} interacciones",
+    "noInteractions": "Interactúe con la consola",
+    "unsupported": "No disponible en este navegador",
+    "fps": "Cuadros por segundo",
+    "frameDetail": "Dibujo {{draw}} ms · peor cuadro {{worst}} ms",
+    "inpBreakdown": "Desglose del INP",
+    "latest": "Última interacción",
+    "eventName": "{{name}} · {{total}} ms",
+    "inputDelay": "Retardo de entrada",
+    "processing": "Procesamiento",
+    "presentation": "Retardo de presentación",
+    "longTasks": "Tareas largas (> 50 ms)",
+    "longTasksDetail": "{{count}} en total · peor {{worst}} ms · {{recent}} en el último segundo",
+    "backlog": "Rezago de mensajes en el hilo principal",
+    "backlogDetail": "Actual {{current}} · pico {{peak}} · {{slices}} porciones de 4 ms",
+    "yieldStrategy": "Cesión al Event Loop",
+    "strategies": {
+      "postTask": "scheduler.postTask (macrotarea nativa)",
+      "messageChannel": "MessageChannel (macrotarea)"
+    }
+  },
+  "numeric": {
+    "drift": "Deriva relativa máxima corregida en sumas móviles",
+    "recomputations": "Recálculos exactos de sumas",
+    "recomputationsDetail": "{{count}} recálculos · {{negatives}} correcciones por suma negativa"
+  },
+  "threads": {
+    "title": "Reparto del trabajo entre hilos",
+    "explanation": "Workers de detección: {{workers}}, para {{cores}} núcleos lógicos ({{reserved}} reservados para el hilo principal y la ingesta). Partición por estación: {{perWorker}} estaciones (×3 canales) por worker.",
+    "overridden": "Cantidad de workers forzada con el parámetro ?workers= de la URL.",
+    "main": "Hilo principal",
+    "mainDetail": "Dibujo con requestAnimationFrame, interacción y paneles. Lee el historial compartido sin copiarlo.",
+    "ingest": "Worker de ingesta",
+    "ingestDetail": "Recibe las tramas binarias (generador o WebSocket) y las enruta por estación con objetos transferibles.",
+    "worker": "Worker de detección {{index}}",
+    "workerStats": "{{throughput}} muestras/s · cola {{queue}} lotes · espera {{age}} ms",
+    "utilization": "Ocupación {{value}} %",
+    "coincidence": "Worker de coincidencia",
+    "coincidenceDetail": "Ordena los disparos por tiempo de evento y confirma con 4 estaciones en 6 s.",
+    "export": "Worker de exportación",
+    "exportDetail": "Genera el CSV leyendo la memoria compartida; espera datos con Atomics.wait."
+  },
+  "ingest": {
+    "title": "Ingesta, orden y duplicados",
+    "window": "Ventana de reordenamiento acotada: {{ms}} ms (hasta {{positions}} posiciones de desorden por canal).",
+    "rate": "Tramas por segundo",
+    "rateDetail": "{{samples}} muestras/s · {{kbps}} KB/s",
+    "metric": "Indicador",
+    "detected": "Detectado por la consola",
+    "injected": "Inyectado por el generador",
+    "received": "Tramas recibidas",
+    "delivered": "Tramas entregadas en orden",
+    "duplicates": "Duplicadas descartadas",
+    "reordered": "Llegaron desordenadas y se reordenaron",
+    "lost": "Perdidas (huecos rellenados)",
+    "late": "Tardías descartadas",
+    "note": "El generador cuenta las tramas que retuvo; la consola cuenta las que llegaron después de una posterior. Las tramas que llegan con su ventana ya cerrada se descartan y se cuentan; los huecos quedan como ausencia de dato, no como ceros.",
+    "pending": "En espera dentro de la ventana ahora"
+  },
+  "simulator": {
+    "title": "Generador de señal sintética",
+    "source": "Fuente de datos",
+    "synthetic": "Generador interno",
+    "websocket": "Servidor WebSocket",
+    "url": "Dirección del servidor",
+    "connect": "Conectar",
+    "connected": "Conectado al servidor de tramas (errores: {{errors}}).",
+    "disconnected": "Sin conexión. Inicie el servidor con npm run generator (errores: {{errors}}).",
+    "faults": "Condiciones del enlace de radio",
+    "fault": {
+      "disorder": "Desorden de tramas (4 %, hasta 3 posiciones)",
+      "duplicates": "Retransmisiones duplicadas (0,8 %)",
+      "losses": "Día de lluvia: pérdidas en ráfagas de 1 a 12 tramas",
+      "clockDrift": "Deriva de reloj entre estaciones (hasta 40 ms)"
+    },
+    "activity": "Actividad sísmica",
+    "magnitude": "Magnitud del sismo a inyectar: M{{value}}",
+    "injectQuake": "Inyectar sismo M{{magnitude}}",
+    "injectLocal": "Inyectar ruido local (vehículo pesado)",
+    "burstDuration": "Ráfaga de actividad 4× (duración)",
+    "burst": "Iniciar ráfaga 4×",
+    "stopBurst": "Detener ráfaga",
+    "burstActive": "Ráfaga 4× activa · {{seconds}} s",
+    "quakeCount": "Sismos generados en esta sesión: {{count}}"
+  },
+  "detector": {
+    "title": "Detector STA/LTA y coincidencia",
+    "staWindow": "STA: promedio de x² en {{sta}} muestras ({{staSeconds}} s)",
+    "ltaWindow": "LTA: promedio de x² en {{lta}} muestras ({{ltaSeconds}} s)",
+    "envelope": "Envolvente: máximo absoluto en {{envelope}} s, costo O(1) amortizado",
+    "coincidence": "Evento confirmado: {{stations}} estaciones en disparo dentro de {{window}} s",
+    "freeze": "La LTA no se actualiza mientras el canal está en disparo",
+    "onRatio": "Umbral de disparo ON (r ≥)",
+    "offRatio": "Umbral de liberación OFF (r ≤)",
+    "invalid": "El umbral OFF debe ser positivo y menor que el umbral ON.",
+    "apply": "Aplicar umbrales",
+    "restore": "Restaurar 4,0 / 1,5",
+    "controlNote": "Los umbrales viajan como mensaje de control con postMessage a cada worker de detección."
+  },
+  "benchmark": {
+    "title": "Copia estructurada vs. objetos transferibles",
+    "description": "Mide entre dos workers el tiempo por envío de un ArrayBuffer copiándolo y transfiriéndolo. La prueba corre fuera del hilo principal.",
+    "run": "Medir",
+    "running": "Midiendo…",
+    "empty": "Pulse «Medir» para obtener la tabla de este equipo.",
+    "size": "Tamaño",
+    "clone": "Copia",
+    "transfer": "Transferencia",
+    "speedup": "Mejora",
+    "times": "{{value}}×",
+    "bytes": "{{value}} B",
+    "kilobytes": "{{value}} KB",
+    "megabytes": "{{value}} MB"
+  },
+  "log": {
+    "title": "Bitácora de disparos por estación",
+    "total": "{{count}} transiciones",
+    "empty": "Sin disparos registrados todavía.",
+    "on": "ON",
+    "off": "OFF",
+    "onDetail": "r = {{ratio}}",
+    "offDetail": "pico {{peak}} cuentas"
+  },
+  "export": {
+    "timeColumn": "tiempo_utc",
+    "columnLabel": "{{code}}_{{component}}",
+    "defaultFileName": "ventana_sismica.csv",
+    "eventFileName": "evento_{{id}}_{{time}}.csv",
+    "selectionFileName": "seleccion_{{time}}.csv"
+  },
+  "isolation": {
+    "title": "La consola necesita aislamiento de origen",
+    "body": "El historial de 10 minutos vive en un SharedArrayBuffer, que el navegador solo habilita cuando la página está aislada con las cabeceras COOP y COEP.",
+    "crossOriginIsolated": "crossOriginIsolated",
+    "sharedArrayBuffer": "SharedArrayBuffer disponible",
+    "stepHeaders": "El servidor debe enviar Cross-Origin-Opener-Policy: same-origin y Cross-Origin-Embedder-Policy: require-corp.",
+    "stepLocal": "En local use npm start (el servidor de desarrollo ya envía esas cabeceras) o npm run preview tras compilar.",
+    "stepBrowser": "Use una versión reciente de Chrome, Edge, Firefox o Safari."
+  }
+}

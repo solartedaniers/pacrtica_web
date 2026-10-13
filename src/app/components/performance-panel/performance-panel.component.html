@@ -1,0 +1,76 @@
+<section class="panel">
+  <header class="panel__header">
+    <h2 class="panel__title">{{ 'performance.title' | translate }}</h2>
+    <button type="button" class="button button--ghost button--small" (click)="reset()">{{ 'performance.reset' | translate }}</button>
+  </header>
+  @if (view(); as v) {
+    <div class="metric-row">
+      <div class="metric" [attr.data-level]="v.inp?.level ?? 'good'">
+        <span class="metric__label">{{ 'performance.inp' | translate }}</span>
+        <span class="metric__value">
+          @if (!v.interactionsSupported) {
+            {{ 'performance.unsupported' | translate }}
+          } @else if (v.inp) {
+            {{ 'common.ms' | translate: { value: v.inp.total } }}
+          } @else {
+            {{ 'performance.noInteractions' | translate }}
+          }
+        </span>
+        <span class="metric__caption">{{ 'performance.budget' | translate }} · {{ 'performance.interactions' | translate: { count: v.interactionCount } }}</span>
+      </div>
+      <div class="metric" [attr.data-level]="v.fpsLevel">
+        <span class="metric__label">{{ 'performance.fps' | translate }}</span>
+        <span class="metric__value">{{ v.fps }}</span>
+        <span class="metric__caption">{{ 'performance.frameDetail' | translate: { draw: v.drawMs, worst: v.worstFrame } }}</span>
+      </div>
+    </div>
+    @for (item of [{ title: 'performance.inpBreakdown', data: v.inp }, { title: 'performance.latest', data: v.latest }]; track item.title) {
+      @if (item.data; as b) {
+        <div class="breakdown">
+          <div class="breakdown__head">
+            <span>{{ item.title | translate }}</span>
+            <span class="breakdown__name">{{ 'performance.eventName' | translate: { name: b.name, total: b.total } }}</span>
+          </div>
+          <div class="breakdown__bar" aria-hidden="true">
+            @for (part of b.parts; track part.key) {
+              <span class="breakdown__segment" [attr.data-tone]="part.tone" [style.width.%]="part.share"></span>
+            }
+          </div>
+          <ul class="breakdown__legend">
+            @for (part of b.parts; track part.key) {
+              <li [attr.data-tone]="part.tone">{{ part.key | translate }} <strong>{{ 'common.ms' | translate: { value: part.value } }}</strong></li>
+            }
+          </ul>
+        </div>
+      }
+    }
+    <dl class="facts facts--compact">
+      <div>
+        <dt>{{ 'performance.longTasks' | translate }}</dt>
+        <dd>
+          @if (v.longTasksSupported) {
+            {{ 'performance.longTasksDetail' | translate: { count: v.longTaskCount, worst: v.longTaskWorst, recent: v.longTaskRecent } }}
+          } @else {
+            {{ 'performance.unsupported' | translate }}
+          }
+        </dd>
+      </div>
+      <div>
+        <dt>{{ 'performance.backlog' | translate }}</dt>
+        <dd>{{ 'performance.backlogDetail' | translate: { current: v.backlogCurrent, peak: v.backlogPeak, slices: v.backlogSlices } }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'performance.yieldStrategy' | translate }}</dt>
+        <dd>{{ 'performance.strategies.' + v.strategy | translate }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'numeric.drift' | translate }}</dt>
+        <dd>{{ v.drift }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'numeric.recomputations' | translate }}</dt>
+        <dd>{{ 'numeric.recomputationsDetail' | translate: { count: v.recomputations, negatives: v.negatives } }}</dd>
+      </div>
+    </dl>
+  }
+</section>

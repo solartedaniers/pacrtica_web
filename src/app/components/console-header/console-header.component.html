@@ -1,0 +1,35 @@
+<header class="header">
+  <div class="header__brand">
+    <svg class="header__mark" viewBox="0 0 48 48" aria-hidden="true">
+      <path class="header__mark-cone" d="M6 40 L20 14 L24 18 L28 12 L42 40 Z" />
+      <path class="header__mark-wave" d="M4 30 L14 30 L18 22 L22 36 L26 26 L30 30 L44 30" />
+    </svg>
+    <div>
+      <h1 class="header__title">{{ 'app.title' | translate }}</h1>
+      <p class="header__subtitle">{{ 'app.subtitle' | translate }}</p>
+    </div>
+  </div>
+  <dl class="header__clocks">
+    <div class="clock">
+      <dt class="clock__label">{{ 'header.wallClock' | translate }}</dt>
+      <dd class="clock__value">{{ clocks()?.wall ?? ('common.noValue' | translate) }}</dd>
+    </div>
+    <div class="clock">
+      <dt class="clock__label">{{ 'header.dataClock' | translate }}</dt>
+      <dd class="clock__value">{{ clocks()?.data ?? ('common.noValue' | translate) }}</dd>
+    </div>
+    <div class="clock" [attr.data-level]="clocks()?.lagLevel">
+      <dt class="clock__label">{{ 'header.lag' | translate }}</dt>
+      <dd class="clock__value">{{ 'common.ms' | translate: { value: clocks()?.lag ?? ('common.noValue' | translate) } }}</dd>
+    </div>
+  </dl>
+  <ul class="header__chips">
+    <li class="chip" [class.chip--ok]="environment.crossOriginIsolated" [class.chip--danger]="!environment.crossOriginIsolated">
+      {{ (environment.crossOriginIsolated ? 'header.isolated' : 'header.notIsolated') | translate }}
+    </li>
+    @if (topology(); as t) {
+      <li class="chip">{{ 'header.threads' | translate: t }}</li>
+      <li class="chip">{{ 'header.memory' | translate: t }}</li>
+    }
+  </ul>
+</header>

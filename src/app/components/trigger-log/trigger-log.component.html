@@ -1,0 +1,22 @@
+<section class="panel">
+  <header class="panel__header">
+    <h2 class="panel__title">{{ 'log.title' | translate }}</h2>
+    <span class="panel__meta">{{ 'log.total' | translate: { count: total() } }}</span>
+  </header>
+  @if (entries().length === 0) {
+    <p class="empty">{{ 'log.empty' | translate }}</p>
+  } @else {
+    <ol class="log">
+      @for (entry of entries(); track entry.key) {
+        <li class="log__entry" [attr.data-state]="entry.state">
+          <span class="log__state">{{ 'log.' + entry.state | translate }}</span>
+          <span class="log__time">{{ entry.time }}</span>
+          <span class="log__station" [attr.title]="entry.name">{{ entry.station }}</span>
+          <span class="log__detail">
+            {{ (entry.state === 'on' ? 'log.onDetail' : 'log.offDetail') | translate: { ratio: entry.ratio, peak: entry.peak } }}
+          </span>
+        </li>
+      }
+    </ol>
+  }
+</section>

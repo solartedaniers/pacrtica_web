@@ -1,0 +1,33 @@
+<section class="panel">
+  <header class="panel__header">
+    <h2 class="panel__title">{{ 'benchmark.title' | translate }}</h2>
+    <button type="button" class="button button--primary button--small" [disabled]="benchmark.running()" (click)="benchmark.run()">
+      {{ (benchmark.running() ? 'benchmark.running' : 'benchmark.run') | translate }}
+    </button>
+  </header>
+  <p class="panel__lead">{{ 'benchmark.description' | translate }}</p>
+  @if (rows().length > 0) {
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">{{ 'benchmark.size' | translate }}</th>
+          <th scope="col">{{ 'benchmark.clone' | translate }}</th>
+          <th scope="col">{{ 'benchmark.transfer' | translate }}</th>
+          <th scope="col">{{ 'benchmark.speedup' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of rows(); track row.size) {
+          <tr>
+            <th scope="row">{{ row.size }}</th>
+            <td>{{ 'common.ms' | translate: { value: row.clone } }}</td>
+            <td>{{ 'common.ms' | translate: { value: row.transfer } }}</td>
+            <td>{{ 'benchmark.times' | translate: { value: row.speedup } }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <p class="empty">{{ 'benchmark.empty' | translate }}</p>
+  }
+</section>

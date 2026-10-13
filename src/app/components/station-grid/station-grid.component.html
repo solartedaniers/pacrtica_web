@@ -1,0 +1,33 @@
+<section class="panel">
+  <header class="panel__header">
+    <h2 class="panel__title">{{ 'stations.title' | translate }}</h2>
+    <span class="panel__meta">{{ 'stations.meta' | translate }}</span>
+  </header>
+  <div class="station-grid">
+    @for (card of cards(); track card.id) {
+      <article class="station" [class.station--triggered]="card.triggered">
+        <header class="station__head">
+          <span class="station__lamp" aria-hidden="true"></span>
+          <strong class="station__code">{{ card.code }}</strong>
+          <span class="station__zone">{{ 'stations.zone.' + card.zone | translate }}</span>
+        </header>
+        <p class="station__name">{{ card.name }}</p>
+        <ul class="station__channels">
+          @for (channel of card.channels; track channel.key) {
+            <li class="ratio" [class.ratio--on]="channel.triggered">
+              <span class="ratio__label">{{ channel.label }}</span>
+              <span class="ratio__track">
+                <span class="ratio__fill" [style.width.%]="channel.fill"></span>
+                <span class="ratio__threshold" [style.left.%]="card.threshold"></span>
+              </span>
+              <span class="ratio__value">{{ channel.ratio }}</span>
+              @if (channel.frozen) {
+                <span class="ratio__frozen" [attr.title]="'stations.ltaFrozen' | translate">{{ 'stations.ltaFrozenShort' | translate }}</span>
+              }
+            </li>
+          }
+        </ul>
+      </article>
+    }
+  </div>
+</section>

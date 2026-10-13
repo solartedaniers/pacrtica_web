@@ -1,0 +1,14 @@
+/dist
+/tmp
+/out-tsc
+/node_modules
+/tools/dist
+npm-debug.log
+/.angular/cache
+/.angular
+/coverage
+.vercel
+.idea/
+.vscode/
+*.sublime-workspace
+.DS_Store

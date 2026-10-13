@@ -1,0 +1,21 @@
+<main class="isolation">
+  <section class="panel isolation__card">
+    <h1 class="isolation__title">{{ 'isolation.title' | translate }}</h1>
+    <p>{{ 'isolation.body' | translate }}</p>
+    <dl class="facts">
+      <div>
+        <dt>{{ 'isolation.crossOriginIsolated' | translate }}</dt>
+        <dd>{{ (environment.crossOriginIsolated ? 'common.yes' : 'common.no') | translate }}</dd>
+      </div>
+      <div>
+        <dt>{{ 'isolation.sharedArrayBuffer' | translate }}</dt>
+        <dd>{{ (environment.sharedMemoryAvailable ? 'common.yes' : 'common.no') | translate }}</dd>
+      </div>
+    </dl>
+    <ol class="isolation__steps">
+      <li>{{ 'isolation.stepHeaders' | translate }}</li>
+      <li>{{ 'isolation.stepLocal' | translate }}</li>
+      <li>{{ 'isolation.stepBrowser' | translate }}</li>
+    </ol>
+  </section>
+</main>

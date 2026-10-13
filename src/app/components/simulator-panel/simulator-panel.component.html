@@ -1,0 +1,70 @@
+<section class="panel">
+  <header class="panel__header">
+    <h2 class="panel__title">{{ 'simulator.title' | translate }}</h2>
+    @if (source().burstRemaining; as remaining) {
+      <span class="badge badge--alert">{{ 'simulator.burstActive' | translate: { seconds: remaining } }}</span>
+    }
+  </header>
+  <fieldset class="field-group">
+    <legend class="field-group__legend">{{ 'simulator.source' | translate }}</legend>
+    <div class="segmented segmented--full">
+      <button type="button" class="segmented__item" [class.segmented__item--active]="source().mode === 'synthetic'" (click)="selectSource('synthetic')">
+        {{ 'simulator.synthetic' | translate }}
+      </button>
+      <button type="button" class="segmented__item" [class.segmented__item--active]="source().mode === 'websocket'" (click)="selectSource('websocket')">
+        {{ 'simulator.websocket' | translate }}
+      </button>
+    </div>
+    @if (source().mode === 'websocket') {
+      <label class="field">
+        <span class="field__label">{{ 'simulator.url' | translate }}</span>
+        <span class="field__inline">
+          <input class="input" type="url" [value]="urlDraft()" (input)="setUrl($event)" />
+          <button type="button" class="button" (click)="selectSource('websocket')">{{ 'simulator.connect' | translate }}</button>
+        </span>
+      </label>
+      <p class="panel__hint">
+        {{ (source().connected ? 'simulator.connected' : 'simulator.disconnected') | translate: { errors: source().errors } }}
+      </p>
+    }
+  </fieldset>
+  <fieldset class="field-group">
+    <legend class="field-group__legend">{{ 'simulator.faults' | translate }}</legend>
+    @for (key of faultKeys; track key) {
+      <label class="toggle">
+        <input type="checkbox" class="toggle__input" [checked]="pipeline.faults()[key]" (change)="toggleFault(key)" />
+        <span class="toggle__track" aria-hidden="true"></span>
+        <span class="toggle__label">{{ 'simulator.fault.' + key | translate }}</span>
+      </label>
+    }
+  </fieldset>
+  <fieldset class="field-group">
+    <legend class="field-group__legend">{{ 'simulator.activity' | translate }}</legend>
+    <label class="field">
+      <span class="field__label">{{ 'simulator.magnitude' | translate: { value: magnitude().toFixed(1) } }}</span>
+      <input class="range" type="range" min="1.2" max="3.6" step="0.1" [value]="magnitude()" (input)="setMagnitude($event)" />
+    </label>
+    <div class="button-row">
+      <button type="button" class="button button--primary" (click)="injectQuake()">
+        {{ 'simulator.injectQuake' | translate: { magnitude: magnitude().toFixed(1) } }}
+      </button>
+      <button type="button" class="button" (click)="injectLocalNoise()">{{ 'simulator.injectLocal' | translate }}</button>
+    </div>
+    <label class="field">
+      <span class="field__label">{{ 'simulator.burstDuration' | translate }}</span>
+      <span class="field__inline">
+        <select class="input" (change)="setBurst($event)">
+          @for (option of burstOptions; track option) {
+            <option [value]="option" [selected]="option === burstSeconds()">{{ 'common.seconds' | translate: { value: option } }}</option>
+          }
+        </select>
+        @if (source().burstRemaining) {
+          <button type="button" class="button" (click)="stopBurst()">{{ 'simulator.stopBurst' | translate }}</button>
+        } @else {
+          <button type="button" class="button button--warning" (click)="startBurst()">{{ 'simulator.burst' | translate }}</button>
+        }
+      </span>
+    </label>
+    <p class="panel__hint">{{ 'simulator.quakeCount' | translate: { count: source().quakes } }}</p>
+  </fieldset>
+</section>

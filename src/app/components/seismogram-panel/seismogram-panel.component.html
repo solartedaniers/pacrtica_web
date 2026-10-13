@@ -1,0 +1,83 @@
+<div class="panel panel--flush">
+  <header class="panel__header trace-toolbar">
+    <div class="trace-toolbar__title">
+      <h2 class="panel__title">{{ 'seismogram.title' | translate }}</h2>
+      <span class="badge" [class.badge--live]="view.live()" [class.badge--muted]="!view.live()">
+        {{ (view.live() ? 'seismogram.live' : 'seismogram.paused') | translate }}
+      </span>
+    </div>
+    <div class="trace-toolbar__controls">
+      <div class="segmented" role="group" [attr.aria-label]="'seismogram.window' | translate">
+        @for (option of windowOptions; track option) {
+          <button
+            type="button"
+            class="segmented__item"
+            [class.segmented__item--active]="view.windowSeconds() === option"
+            (click)="setWindow(option)"
+          >
+            {{ 'seismogram.seconds' | translate: { value: option } }}
+          </button>
+        }
+      </div>
+      <button type="button" class="button button--ghost" (click)="zoom(1 / 1.5)" [attr.aria-label]="'seismogram.zoomIn' | translate">
+        {{ 'seismogram.zoomInShort' | translate }}
+      </button>
+      <button type="button" class="button button--ghost" (click)="zoom(1.5)" [attr.aria-label]="'seismogram.zoomOut' | translate">
+        {{ 'seismogram.zoomOutShort' | translate }}
+      </button>
+      <button
+        type="button"
+        class="button button--ghost"
+        [class.button--pressed]="view.selectionMode()"
+        [attr.aria-pressed]="view.selectionMode()"
+        (click)="view.toggleSelectionMode()"
+      >
+        {{ 'seismogram.select' | translate }}
+      </button>
+      <button type="button" class="button" [class.button--primary]="!view.live()" (click)="toggleLive()">
+        {{ (view.live() ? 'seismogram.pause' : 'seismogram.goLive') | translate }}
+      </button>
+    </div>
+  </header>
+  @if (selectionSummary(); as summary) {
+    <div class="selection-bar">
+      <span>{{ 'seismogram.selection' | translate: summary }}</span>
+      <div class="selection-bar__actions">
+        <button type="button" class="button button--primary" (click)="exportSelection(summary.range)">
+          {{ 'seismogram.exportSelection' | translate }}
+        </button>
+        <button type="button" class="button button--ghost" (click)="clearSelection()">
+          {{ 'seismogram.clearSelection' | translate }}
+        </button>
+      </div>
+      @if (selectionExport(); as job) {
+        <span class="selection-bar__status">
+          @switch (job.phase) {
+            @case ('waiting') { {{ 'events.exportWaiting' | translate: { seconds: job.pendingSeconds.toFixed(0) } }} }
+            @case ('building') { {{ 'events.exportBuilding' | translate }} }
+            @case ('ready') { {{ 'events.exportReady' | translate: { rows: job.rows, ms: job.elapsedMs.toFixed(0) } }} }
+            @case ('failed') { {{ 'events.reasons.' + job.reason | translate }} }
+          }
+        </span>
+      }
+    </div>
+  }
+  <div class="trace-frame">
+    <canvas
+      #canvas
+      class="trace-canvas"
+      [class.trace-canvas--select]="view.selectionMode()"
+      tabindex="0"
+      role="img"
+      [attr.aria-label]="'seismogram.canvasLabel' | translate"
+      (pointerdown)="onPointerDown($event)"
+      (pointermove)="onPointerMove($event)"
+      (pointerup)="onPointerUp($event)"
+      (pointercancel)="onPointerUp($event)"
+      (pointerleave)="onPointerLeave()"
+      (dblclick)="onDoubleClick()"
+      (keydown)="onKeyDown($event)"
+    ></canvas>
+  </div>
+  <p class="panel__hint">{{ 'seismogram.hint' | translate }}</p>
+</div>

@@ -1,0 +1,40 @@
+<section class="panel">
+  <header class="panel__header">
+    <h2 class="panel__title">{{ 'threads.title' | translate }}</h2>
+  </header>
+  @if (summary(); as s) {
+    <p class="panel__lead">{{ 'threads.explanation' | translate: s }}</p>
+    @if (s.overridden) {
+      <p class="panel__note">{{ 'threads.overridden' | translate }}</p>
+    }
+  }
+  <ul class="thread-map">
+    <li class="thread thread--main">
+      <strong>{{ 'threads.main' | translate }}</strong>
+      <span>{{ 'threads.mainDetail' | translate }}</span>
+    </li>
+    <li class="thread">
+      <strong>{{ 'threads.ingest' | translate }}</strong>
+      <span>{{ 'threads.ingestDetail' | translate }}</span>
+    </li>
+    @for (worker of workers(); track worker.index) {
+      <li class="thread thread--processor">
+        <strong>{{ 'threads.worker' | translate: { index: worker.index } }}</strong>
+        <span>{{ worker.stations }}</span>
+        <span class="thread__stats">
+          {{ 'threads.workerStats' | translate: { throughput: worker.throughput, queue: worker.queue, age: worker.age } }}
+        </span>
+        <span class="meter" aria-hidden="true"><span class="meter__fill" [style.width.%]="worker.utilization"></span></span>
+        <span class="thread__stats">{{ 'threads.utilization' | translate: { value: worker.utilizationText } }}</span>
+      </li>
+    }
+    <li class="thread">
+      <strong>{{ 'threads.coincidence' | translate }}</strong>
+      <span>{{ 'threads.coincidenceDetail' | translate }}</span>
+    </li>
+    <li class="thread">
+      <strong>{{ 'threads.export' | translate }}</strong>
+      <span>{{ 'threads.exportDetail' | translate }}</span>
+    </li>
+  </ul>
+</section>

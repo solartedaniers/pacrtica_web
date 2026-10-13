@@ -1,0 +1,50 @@
+<section class="panel">
+  <header class="panel__header">
+    <h2 class="panel__title">{{ 'events.title' | translate }}</h2>
+    <span class="panel__meta">{{ 'events.rule' | translate }}</span>
+  </header>
+  @if (rows().length === 0) {
+    <p class="empty">{{ 'events.empty' | translate }}</p>
+  } @else {
+    <ol class="event-list">
+      @for (row of rows(); track row.event.id) {
+        <li class="event-card" [class.event-card--active]="!row.event.closed">
+          <div class="event-card__head">
+            <strong class="event-card__id">{{ 'events.id' | translate: { id: row.event.id } }}</strong>
+            <span class="badge" [class.badge--alert]="!row.event.closed" [class.badge--muted]="row.event.closed">
+              {{ (row.event.closed ? 'events.closed' : 'events.inProgress') | translate }}
+            </span>
+          </div>
+          <dl class="facts">
+            <div><dt>{{ 'events.firstTrigger' | translate }}</dt><dd>{{ row.firstTrigger }}</dd></div>
+            <div><dt>{{ 'events.confirmedAt' | translate }}</dt><dd>{{ row.confirmed }}</dd></div>
+            <div><dt>{{ 'events.duration' | translate }}</dt><dd>{{ row.duration === null ? ('events.open' | translate) : ('common.seconds' | translate: { value: row.duration }) }}</dd></div>
+            <div><dt>{{ 'events.peak' | translate }}</dt><dd>{{ 'common.counts' | translate: { value: row.peak } }}</dd></div>
+            <div class="facts__wide"><dt>{{ 'events.stations' | translate }}</dt><dd>{{ row.stations }}</dd></div>
+          </dl>
+          <div class="event-card__actions">
+            <button type="button" class="button button--ghost" (click)="focus(row.event)">{{ 'events.view' | translate }}</button>
+            <button
+              type="button"
+              class="button button--primary"
+              [disabled]="row.job?.phase === 'waiting' || row.job?.phase === 'building'"
+              (click)="export(row.event)"
+            >
+              {{ 'events.export' | translate }}
+            </button>
+          </div>
+          @if (row.job; as job) {
+            <p class="event-card__status" [attr.data-phase]="job.phase">
+              @switch (job.phase) {
+                @case ('waiting') { {{ 'events.exportWaiting' | translate: { seconds: job.pendingSeconds.toFixed(0) } }} }
+                @case ('building') { {{ 'events.exportBuilding' | translate }} }
+                @case ('ready') { {{ 'events.exportReady' | translate: { rows: job.rows, ms: job.elapsedMs.toFixed(0) } }} }
+                @case ('failed') { {{ 'events.reasons.' + job.reason | translate }} }
+              }
+            </p>
+          }
+        </li>
+      }
+    </ol>
+  }
+</section>
